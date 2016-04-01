@@ -5,6 +5,7 @@ import Memberships from '../components/settings/Memberships';
 import Watermarks from '../components/settings/Watermarks';
 import Distribution from '../components/settings/Distribution';
 import Touts from '../components/video/Touts';
+import Articles from '../components/articles/Articles';
 import { Route, IndexRoute } from 'react-router';
 
 export default (
@@ -17,5 +18,7 @@ export default (
     <Route path="/touts/scheduled" component={Touts} />
     <Route path="/touts/published" component={Touts} />
     <Route path="/touts/rejected" component={Touts} />
+    <Route path="/articles" component={Articles} />
+    <Route path="/articles/unmatched" component={Articles} />
   </Route>
 );

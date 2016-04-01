@@ -1,0 +1,107 @@
+.sidebar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #1F2631;
+    /*border-right: 1px solid #eee;*/
+  }
+}
+
+.sidebar {
+
+  .menu {
+    a.item {
+      color:#878787;
+      font-size:0.9rem;
+      text-align: left;
+      padding-left: 1rem;
+      margin-left: 0;
+      border: none;
+      line-height: 2.5;
+
+      span {
+        /*width: 60%;*/
+        /*display:inline-block;*/
+        text-align: left;
+        line-height: 4;
+      }
+
+      i {
+        margin-right: 0.5rem;
+        /*display: inline-block;*/
+        vertical-align: baseline;
+        text-align: center;
+        font-size: 1.3em;
+      }
+
+      &.active{
+        color: white;
+        background-color: #121820;
+      }
+
+      &.disabled {
+        cursor: default;
+        color: grey !important;
+        .icon {
+          color: grey;
+        }
+      }
+    }
+  }
+
+  .submenu{
+    display:none;
+    position: relative;
+
+    a.subitem{
+      font-size: 12px;
+      display: block;
+      line-height: 3;
+      text-align: left;
+      padding-left: 1.3em;
+      border-top: 1px solid #2C2F32;
+      color:#878787;
+      padding-left: 2em;
+      background-color: #121820;
+
+      &:before {
+        background-image: none;
+      }
+      &:hover {
+        color:white !important;
+      }
+      &.active {
+        border-left: 3px solid #00A4E4;
+      }
+      &.disabled, &.disabled:hover {
+        cursor: default;
+        color: grey;
+      }
+    }
+  }
+
+  .item.active + .submenu {
+    display:block;
+    background-color: #161d27;
+    a.active{
+      color: #fff;
+    }
+  }
+}
+
+
+
+
+
+
