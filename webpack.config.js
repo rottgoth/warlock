@@ -1,7 +1,13 @@
 module.exports = {
   entry: "./app/App.js",
+  // output: {
+  //   filename: "public/bundle.js"
+  // },
   output: {
-    filename: "public/bundle.js"
+    path: __dirname + '/__build__',
+    filename: 'bundle.js',
+    chunkFilename: '[id].chunk.js',
+    publicPath: '/__build__/'
   },
   module: {
     loaders: [

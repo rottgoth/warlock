@@ -9,15 +9,15 @@ class Sidebar extends React.Component {
         <nav>
           {data.getAll().map((section, index) => (
             <ul key={index} className="nav nav-sidebar">
-              <li>
-                <Link className="item" to={section.url}>
+              <li className="item">
+                <Link activeClassName="active" to={section.url}>
                   <i className={section.icon}></i>
                   {section.name}
                 </Link>
               </li>
               {section.subsections.map((subsection, subIndex) => (
-                <li>
-                  <Link className="subitem" key={subIndex} to={subsection.url}>
+                <li className="subitem">
+                  <Link activeClassName="active" key={subIndex} to={subsection.url}>
                     {subsection.name}
                   </Link>
                 </li>
