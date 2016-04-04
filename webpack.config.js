@@ -4,10 +4,10 @@ module.exports = {
   //   filename: "public/bundle.js"
   // },
   output: {
-    path: __dirname + '/__build__',
+    path: __dirname + '/dist/',
     filename: 'bundle.js',
     chunkFilename: '[id].chunk.js',
-    publicPath: '/__build__/'
+    publicPath: __dirname + '/dist/'
   },
   module: {
     loaders: [

@@ -1,16 +1,38 @@
 import React from 'react';
 import TopNav from './TopNav';
 import Sidebar from './sidebar/Sidebar';
+import auth from '../utils/auth';
 
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: auth.loggedIn()
+    }
+    this.updateAuth = this.updateAuth.bind(this)
+  }
+  updateAuth(loggedIn) {
+    this.setState({
+      loggedIn: !!loggedIn
+    })
+  }
+  componentWillMount() {
+    auth.onChange = this.updateAuth
+    auth.login()
+  }
   render() {
+    this.contentClasses = this.state.loggedIn ? (
+      'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2'
+    ) : (
+      'col-sm-12'
+    )
     return (
       <div>
         <TopNav/>
         <div className="container-fluid">
           <div className="row">
-            <Sidebar/>
-            <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {this.state.loggedIn && <Sidebar/>}
+            <div className={this.contentClasses + ' main'}>
               {this.props.children}
             </div>
           </div>

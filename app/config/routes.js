@@ -1,31 +1,13 @@
-// import React from 'react';
-// import Main from '../components/Main';
-// import Home from '../components/Home';
-// import Memberships from '../components/settings/Memberships';
-// import Watermarks from '../components/settings/Watermarks';
-// import Distribution from '../components/settings/Distribution';
-// import Touts from '../components/video/Touts';
-// import ToutsList from '../components/video/ToutsList';
-// import Articles from '../components/articles/Articles';
-// import { Route, IndexRoute } from 'react-router';
-
-// export default (
-//   <Route path="/" component={Main}>
-//     <IndexRoute component={Home} />
-//     <Route path="/memberships" component={Memberships} />
-//     <Route path="/watermarks" component={Watermarks} />
-//     <Route path="/distribution" component={Distribution} />
-//     <Route path="/touts" component={Touts} >
-//       <Route path="/touts/pending" component={ToutsList} />
-//       <Route path="/touts/scheduled" component={ToutsList} />
-//       <Route path="/touts/published" component={ToutsList} />
-//       <Route path="/touts/rejected" component={ToutsList} />
-//     </Route>
-//     <Route path="/articles" component={Articles} />
-//     <Route path="/articles/unmatched" component={Articles} />
-//   </Route>
-// );
 import auth from '../utils/auth.js'
+import Main from '../components/Main'
+import Logout from '../components/Logout'
+import Home from '../components/Home'
+import Login from '../components/Login'
+import Memberships from '../components/settings/Memberships'
+import Watermarks from '../components/settings/Watermarks'
+import Distribution from '../components/settings/Distribution'
+import Touts from '../components/video/Touts'
+import ToutsList from '../components/video/ToutsList'
 
 function redirectToLogin(nextState, replace) {
   if (!auth.loggedIn()) {
@@ -43,12 +25,12 @@ function redirectToHome(nextState, replace) {
 }
 
 export default {
-  component: require('../components/Main'),
+  component: Main,
   childRoutes: [
     { path: '/logout',
-      getComponent: (location, cb) => {
+      getComponents: (location, cb) => {
         require.ensure([], (require) => {
-          cb(null, require('../components/Logout'))
+          cb(null, Logout)
         })
       }
     },
@@ -56,7 +38,7 @@ export default {
     // { path: '/home',
     //   getComponent: (location, cb) => {
     //     require.ensure([], (require) => {
-    //       cb(null, require('../components/Home'))
+    //       cb(null, Home)
     //     })
     //   }
     // },
@@ -66,9 +48,9 @@ export default {
         // Unauthenticated routes
         // Redirect to dashboard if user is already logged in
         { path: '/login',
-          getComponent: (location, cb) => {
+          getComponents: (location, cb) => {
             require.ensure([], (require) => {
-              cb(null, require('../components/Login'))
+              cb(null, Login)
             })
           }
         }
@@ -79,71 +61,72 @@ export default {
     { onEnter: redirectToLogin,
       childRoutes: [
         // Protected routes that don't share UI
+
+        { path: '/',
+          getComponents: (location, cb) => {
+            return require.ensure([], (require) => {
+              cb(null, Memberships)
+            })
+          }
+        },
+
+        // Settings Routes //
         { path: '/memberships',
-          getComponent: (location, cb) => {
+          getComponents: (location, cb) => {
             require.ensure([], (require) => {
-              cb(null, require('../components/settings/Memberships'))
+              cb(null, Memberships)
             })
           }
         },
         { path: '/watermarks',
-          getComponent: (location, cb) => {
+          getComponents: (location, cb) => {
             require.ensure([], (require) => {
-              cb(null, require('../components/settings/Watermarks'))
+              cb(null, Watermarks)
             })
           }
         },
         { path: '/distribution',
-          getComponent: (location, cb) => {
+          getComponents: (location, cb) => {
             require.ensure([], (require) => {
-              cb(null, require('../components/settings/Distribution'))
+              cb(null, Distribution)
             })
           }
-        }
-        // ...
-      ]
-    },
+        },
 
-    { path: '/touts',
-      getComponent: (location, cb) => {
-        // Share the path
-        // Dynamically load the correct component
-        if (auth.loggedIn()) {
-          return require.ensure([], (require) => {
-            cb(null, require('../components/video/Touts'))
-          })
-        }
-        return cb()
-        // render another component
-        // return require.ensure([], (require) => {
-        //   cb(null, require('../components/Landing'))
-        // })
-      },
-      indexRoute: {
-        getComponent: (location, cb) => {
-          // Only load if we're logged in
-          if (auth.loggedIn()) {
+        // Video Routes //
+        { path: '/touts',
+          getComponents: (location, cb) => {
             return require.ensure([], (require) => {
-              cb(null, require('../components/video/ToutsList'))
+              cb(null, Touts)
             })
-          }
-          return cb()
-        }
-      },
-      childRoutes: [
-        { onEnter: redirectToLogin,
-          childRoutes: [
-            // Protected nested routes for the dashboard
-            { path: '/published',
-              getComponent: (location, cb) => {
-                require.ensure([], (require) => {
-                  cb(null, require('../components/video/ToutsList'))
+          },
+          indexRoute: {
+            getComponents: (location, cb) => {
+              // Only load if we're logged in
+              if (auth.loggedIn()) {
+                return require.ensure([], (require) => {
+                  cb(null, ToutsList)
                 })
               }
+              return cb()
             }
-            // ...
+          },
+          childRoutes: [
+            { onEnter: redirectToLogin,
+              childRoutes: [
+                // Protected nested routes for the dashboard
+                { path: '/published',
+                  getComponents: (location, cb) => {
+                    require.ensure([], (require) => {
+                      cb(null, ToutsList)
+                    })
+                  }
+                }
+              ]
+            }
           ]
         }
+
       ]
     }
 
