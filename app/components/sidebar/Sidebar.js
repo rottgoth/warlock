@@ -16,8 +16,8 @@ class Sidebar extends React.Component {
                 </Link>
               </li>
               {section.subsections.map((subsection, subIndex) => (
-                <li className="subitem">
-                  <Link activeClassName="active" key={subIndex} to={subsection.url}>
+                <li className="subitem" key={subIndex}>
+                  <Link activeClassName="active" to={subsection.url}>
                     {subsection.name}
                   </Link>
                 </li>
