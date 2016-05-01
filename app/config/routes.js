@@ -10,6 +10,7 @@ import Touts from '../components/video/Touts'
 import ToutsList from '../components/video/ToutsList'
 
 function redirectToLogin(nextState, replace) {
+  console.log('redirectToLogin')
   if (!auth.loggedIn()) {
     replace({
       pathname: '/login',
@@ -19,6 +20,7 @@ function redirectToLogin(nextState, replace) {
 }
 
 function redirectToHome(nextState, replace) {
+  console.log('redirectToHome')
   if (auth.loggedIn()) {
     replace('/')
   }

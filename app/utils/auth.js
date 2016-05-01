@@ -9,6 +9,7 @@ module.exports = {
     pretendRequest(email, pass, (res) => {
       if (res.authenticated) {
         localStorage.token = res.token
+        localStorage.user = JSON.stringify(res.user)
         if (cb) cb(true)
         this.onChange(true)
       } else {
@@ -22,8 +23,13 @@ module.exports = {
     return localStorage.token
   },
 
+  getUser: function () {
+    return localStorage.user && JSON.parse(localStorage.user)
+  },
+
   logout: function (cb) {
     delete localStorage.token
+    delete localStorage.user
     if (cb) cb()
     this.onChange(false)
   },
@@ -40,6 +46,7 @@ function pretendRequest(email, pass, cb) {
     if (email === 'joe@example.com' && pass === 'password1') {
       cb({
         authenticated: true,
+        user: { name: 'Joe Example', role: 'root' },
         token: Math.random().toString(36).substring(7)
       })
     } else {

@@ -11,6 +11,7 @@ class Main extends React.Component {
     }
     this.updateAuth = this.updateAuth.bind(this)
   }
+
   updateAuth(loggedIn) {
     this.setState({
       loggedIn: !!loggedIn
@@ -20,6 +21,11 @@ class Main extends React.Component {
     auth.onChange = this.updateAuth
     auth.login()
   }
+  logout() {
+    console.log('LOGOUT');
+    auth.logout();
+    this.history.pushState(null, 'login');
+  }
   render() {
     this.contentClasses = this.state.loggedIn ? (
       'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2'
@@ -28,7 +34,7 @@ class Main extends React.Component {
     )
     return (
       <div>
-        <TopNav/>
+        <TopNav currentUser={auth.getUser()} logout={this.logout}/>
         <div className="container-fluid">
           <div className="row">
             {this.state.loggedIn && <Sidebar/>}

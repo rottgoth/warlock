@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router';
+import auth from '../utils/auth';
 
 class TopNav extends React.Component {
   render() {
@@ -16,14 +18,29 @@ class TopNav extends React.Component {
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav navbar-right">
-              <li><a href="#">Dashboard</a></li>
-              <li><a href="#">Settings</a></li>
-              <li><a href="#">Profile</a></li>
-              <li><a href="#">Help</a></li>
+              {this.props.currentUser && (
+
+                <li className="dropdown">
+                  <a className="dropdown-toggle" data-toggle="dropdown" data-target="#" role="button">
+                    {this.props.currentUser.name} <i className="fa fa-caret-down"></i>
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a href="#">
+                        <i className="fa fa-cog"></i>
+                        Settings
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" onClick={() => this.props.logout()}>
+                        <i className="fa fa-off"></i>
+                        Sign out
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              )}
             </ul>
-            <form className="navbar-form navbar-right">
-              <input type="text" className="form-control" placeholder="Search..."/>
-            </form>
           </div>
         </div>
       </nav>

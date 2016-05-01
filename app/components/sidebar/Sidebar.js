@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router'
-import data from './data'
+import { Link } from 'react-router';
+import data from './data';
 
 class Sidebar extends React.Component {
   render() {
